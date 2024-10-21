@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC  
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.example.domain.Order" table="ORDERS">
+        <id name="orderId" column="order_id">
+            <generator class="native"/>
+        </id>
+        
+        <many-to-one name="user" class="com.example.domain.User" column="user_id" lazy="false" not-null="true"/>       
+        <property name="status" column="status"/>
+        <property name="amount" column="amount"/>
+        <set name="orderItems" cascade="all" inverse="true" lazy="false">
+            <key column="order_id"/> 
+            <one-to-many class="com.example.domain.OrderItem"/>
+        </set>
+		
+    </class>
+</hibernate-mapping>

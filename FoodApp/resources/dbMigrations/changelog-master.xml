@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd
+        http://www.liquibase.org/xml/ns/pro 
+        http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd">
+
+     <changeSet id="1" author="saicharan">
+        <createTable tableName="CARTITEM">
+            <column name="cart_item_id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint"/>
+            <column name="item_id" type="bigint"/>
+            <column name="quantity" type="int"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2" author="saicharan">
+        <createTable tableName="MENUITEM">
+            <column name="item_id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="item_name" type="varchar(255)"/>
+            <column name="description" type="varchar(255)"/>
+            <column name="price" type="double"/>
+            <column name="image_url" type="varchar(255)"/>
+            <column name="is_available" type="boolean"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="3" author="saicharan">
+        <createTable tableName="ORDERS">
+            <column name="order_id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="varchar(50)"/>
+            <column name="amount" type="double"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="4" author="saicharan">
+        <createTable tableName="ORDERITEM">
+            <column name="order_item_id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="order_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="item_id" type="bigint"/>
+            <column name="quantity" type="int"/>
+            <column name="price" type="double"/>
+        </createTable>
+        
+        <!-- Adding foreign key constraint -->
+        <addForeignKeyConstraint 
+            constraintName="fk_order_orderitem"
+            baseTableName="ORDERITEM"
+            baseColumnNames="order_id"
+            referencedTableName="ORDERS"
+            referencedColumnNames="order_id"/>
+    </changeSet>
+
+    <changeSet id="5" author="saicharan">
+        <createTable tableName="USERS">
+            <column name="user_id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="username" type="varchar(255)"/>
+            <column name="password" type="varchar(255)"/>
+            <column name="email" type="varchar(255)"/>
+            <column name="role_id" type="bigint"/>
+        </createTable>
+    </changeSet>
+     <changeSet id="6" author="saicharan">
+        <createSequence sequenceName="hibernate_sequence" startValue="1" incrementBy="1"/>
+    </changeSet>
+    <changeSet id="7" author="saicharan">
+        <createTable tableName="newTable">
+            <column name="new_Column" type="bigint"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

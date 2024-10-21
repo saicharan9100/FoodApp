@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns="http://java.sun.com/xml/ns/javaee"
+xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+	<!-- TODO: Add <servlet> tags for each servlet here. -->
+	<!-- TODO: Add <servlet-mapping> tags for each <servlet> here. -->
+	<!-- TODO: Optionally add a <welcome-file-list> tag to display a welcome file. -->
+	<servlet>
+  	<servlet-name>exampleServlet</servlet-name>
+  	<servlet-class>com.example.server.ExampleServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>exampleServlet</servlet-name>
+  	<url-pattern>/FoodUI/exampleservice</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>menuserviceServlet</servlet-name>
+  	<servlet-class>com.example.server.MenuServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>menuserviceServlet</servlet-name>
+  	<url-pattern>/FoodUI/menuService</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>cartserviceServlet</servlet-name>
+  	<servlet-class>com.example.server.CartServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>cartserviceServlet</servlet-name>
+  	<url-pattern>/FoodUI/cartservice</url-pattern>
+  </servlet-mapping>
+  
+  
+  <servlet>
+  	<servlet-name>orderserviceServlet</servlet-name>
+  	<servlet-class>com.example.server.OrderServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>orderserviceServlet</servlet-name>
+  	<url-pattern>/FoodUI/orderservice</url-pattern>
+  </servlet-mapping>
+  
+  
+  <servlet>
+  	<servlet-name>authorizationServlet</servlet-name>
+  	<servlet-class>com.example.server.AuthServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>authorizationServlet</servlet-name>
+  	<url-pattern>/FoodUI/auth</url-pattern>
+  </servlet-mapping>
+  
+  
+  
+  <servlet>
+  	<servlet-name>orderItemserviceServlet</servlet-name>
+  	<servlet-class>com.example.server.OrderServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>orderItemserviceServlet</servlet-name>
+  	<url-pattern>/FoodUI/orderitemservice</url-pattern>
+  </servlet-mapping>
+  
+  
+  <listener>
+		<listener-class>com.example.server.ApplicationContextListener</listener-class>
+	</listener>
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:applicationContext.xml</param-value>
+	</context-param>
+  
+	<welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+</web-app>

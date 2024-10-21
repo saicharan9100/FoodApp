@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context.xsd">
+    
+    <context:component-scan base-package="com.example.client"/>
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="org.postgresql.Driver" />
+		<property name="jdbcUrl" value="jdbc:postgresql://localhost:5432/fooddb" />
+		<property name="user" value="postgres" />
+		<property name="password" value="charan@/123" />
+		
+		<property name="acquireIncrement" value="5" />
+		<property name="minPoolSize" value="5" />
+		<property name="maxPoolSize" value="30" />
+		<property name="maxIdleTime" value="300" />
+	</bean>
+    <!-- Hibernate SessionFactory Configuration -->
+    <bean id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+        <property name="mappingResources">
+            <list>
+                <value>user.hbm.xml</value>
+                <value>cartitem.hbm.xml</value>
+                <value>order.hbm.xml</value>
+                <value>orderitem.hbm.xml</value>
+                <value>menuitem.hbm.xml</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.flushMode">AUTO</prop>
+				<prop key="hibernate.c3p0.provider_class">org.hibernate.c3p0.internal.C3P0ConnectionProvider
+				</prop>
+			</props>
+		</property>
+    </bean>
+    
+    
+    <!-- HibernateTemplate Configuration -->
+    <bean id="template" class="org.springframework.orm.hibernate5.HibernateTemplate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="checkWriteOperations" value="false"/>
+    </bean>
+	<bean class="com.example.server.ApplicationContextListener"/>
+    <!-- HibernateTransactionManager Configuration -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+	<bean id="liquibase" class="liquibase.integration.spring.SpringLiquibase">
+		<property name="changeLog"
+			value="classpath:dbMigrations\changelog-master.xml" />
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+    <!-- DAOs Configuration -->
+    <bean id="userDao" class="com.example.daoimpl.UserDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="menuItemDao" class="com.example.daoimpl.MenuItemDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="cartItemDao" class="com.example.daoimpl.CartItemDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+	<bean id="orderDao" class="com.example.daoimpl.OrderDaoImpl">
+	    <property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<bean id="orderItemDao" class="com.example.daoimpl.OrderItemDaoImpl">
+	    <property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+</beans>
